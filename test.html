@@ -1,0 +1,876 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Historias de Usuario - Sistema Gestión Hotelera</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f5f5f5;
+            padding: 20px;
+            margin: 0;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        
+        .user-story {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        .story-header {
+            color: #00a8a8;
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 3px solid #00a8a8;
+        }
+        
+        .story-section {
+            margin-bottom: 18px;
+        }
+        
+        .story-label {
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 5px;
+        }
+        
+        .story-content {
+            color: #555;
+            line-height: 1.6;
+        }
+        
+        .criteria-box {
+            background-color: #e8f8f8;
+            border-left: 4px solid #00a8a8;
+            padding: 20px;
+            margin: 15px 0;
+            border-radius: 4px;
+        }
+        
+        .criteria-title {
+            font-weight: 700;
+            color: #00a8a8;
+            margin-bottom: 12px;
+            font-size: 16px;
+        }
+        
+        .criteria-box ul {
+            margin: 0;
+            padding-left: 20px;
+        }
+        
+        .criteria-box li {
+            color: #333;
+            margin-bottom: 8px;
+            line-height: 1.5;
+        }
+        
+        .additional-info {
+            background-color: #f9f9f9;
+            padding: 15px;
+            border-radius: 6px;
+            margin-top: 15px;
+        }
+        
+        .footer-text {
+            text-align: center;
+            color: #888;
+            font-size: 14px;
+            margin-top: 20px;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        
+        <!-- H-002 -->
+        <div class="user-story">
+            <h2 class="story-header">H-002: Página de inicio con dashboard de ocupación</h2>
+            
+            <div class="story-section">
+                <div class="story-label">Como:</div>
+                <div class="story-content">administrador del hotel</div>
+            </div>
+            
+            <div class="story-section">
+                <div class="story-label">Quiero:</div>
+                <div class="story-content">visualizar un dashboard con indicadores de ocupación y reservas</div>
+            </div>
+            
+            <div class="story-section">
+                <div class="story-label">Para:</div>
+                <div class="story-content">monitorear el estado operativo del hotel en tiempo real y tomar decisiones informadas</div>
+            </div>
+            
+            <div class="criteria-box">
+                <div class="criteria-title">Criterios de aceptación:</div>
+                <ul>
+                    <li>El dashboard debe mostrar porcentaje de ocupación actual</li>
+                    <li>Debe incluir métricas de reservas confirmadas, pendientes y canceladas</li>
+                    <li>Debe mostrar ingresos del día/semana/mes</li>
+                    <li>La información debe actualizarse automáticamente</li>
+                </ul>
+            </div>
+            
+            <div class="additional-info">
+                <div class="story-label">Información adicional:</div>
+                <div class="story-content">Los gráficos deben ser claros y responsivos, permitiendo filtrar por sede.</div>
+            </div>
+            
+            <div class="footer-text">Fuente: Elaboración propia</div>
+        </div>
+
+        <!-- H-003 -->
+        <div class="user-story">
+            <h2 class="story-header">H-003: Módulo de reservas</h2>
+            
+            <div class="story-section">
+                <div class="story-label">Como:</div>
+                <div class="story-content">recepcionista del hotel</div>
+            </div>
+            
+            <div class="story-section">
+                <div class="story-label">Quiero:</div>
+                <div class="story-content">gestionar las reservas de habitaciones de forma eficiente</div>
+            </div>
+            
+            <div class="story-section">
+                <div class="story-label">Para:</div>
+                <div class="story-content">registrar, modificar y consultar reservas de huéspedes de manera organizada</div>
+            </div>
+            
+            <div class="criteria-box">
+                <div class="criteria-title">Criterios de aceptación:</div>
+                <ul>
+                    <li>Debe permitir crear nuevas reservas con datos del huésped</li>
+                    <li>Debe mostrar disponibilidad de habitaciones por fecha</li>
+                    <li>Debe permitir modificar y cancelar reservas existentes</li>
+                    <li>Debe registrar fecha de entrada, salida y tipo de habitación</li>
+                </ul>
+            </div>
+            
+            <div class="additional-info">
+                <div class="story-label">Información adicional:</div>
+                <div class="story-content">El sistema debe validar que no existan conflictos de disponibilidad.</div>
+            </div>
+            
+            <div class="footer-text">Fuente: Elaboración propia</div>
+        </div>
+
+        <!-- H-004 -->
+        <div class="user-story">
+            <h2 class="story-header">H-004: Módulo de mesa de partes / trámites administrativos</h2>
+            
+            <div class="story-section">
+                <div class="story-label">Como:</div>
+                <div class="story-content">huésped del hotel</div>
+            </div>
+            
+            <div class="story-section">
+                <div class="story-label">Quiero:</div>
+                <div class="story-content">registrar solicitudes y trámites administrativos</div>
+            </div>
+            
+            <div class="story-section">
+                <div class="story-label">Para:</div>
+                <div class="story-content">comunicar mis requerimientos al personal del hotel de forma ordenada</div>
+            </div>
+            
+            <div class="criteria-box">
+                <div class="criteria-title">Criterios de aceptación:</div>
+                <ul>
+                    <li>Debe permitir registrar solicitudes con descripción detallada</li>
+                    <li>Debe asignar un número de seguimiento único</li>
+                    <li>Debe permitir consultar el estado de las solicitudes</li>
+                    <li>Debe notificar al personal responsable automáticamente</li>
+                </ul>
+            </div>
+            
+            <div class="additional-info">
+                <div class="story-label">Información adicional:</div>
+                <div class="story-content">Las solicitudes deben clasificarse por prioridad y área responsable.</div>
+            </div>
+            
+            <div class="footer-text">Fuente: Elaboración propia</div>
+        </div>
+
+        <!-- H-005 -->
+        <div class="user-story">
+            <h2 class="story-header">H-005: Sección de imagen institucional (galería)</h2>
+            
+            <div class="story-section">
+                <div class="story-label">Como:</div>
+                <div class="story-content">visitante del sitio web</div>
+            </div>
+            
+            <div class="story-section">
+                <div class="story-label">Quiero:</div>
+                <div class="story-content">visualizar fotografías y videos de las instalaciones del hotel</div>
+            </div>
+            
+            <div class="story-section">
+                <div class="story-label">Para:</div>
+                <div class="story-content">conocer los espacios, habitaciones y servicios antes de realizar una reserva</div>
+            </div>
+            
+            <div class="criteria-box">
+                <div class="criteria-title">Criterios de aceptación:</div>
+                <ul>
+                    <li>Debe mostrar galería de fotos organizada por categorías</li>
+                    <li>Debe incluir videos de las instalaciones</li>
+                    <li>Las imágenes deben cargarse de forma optimizada</li>
+                    <li>Debe ser responsiva en dispositivos móviles</li>
+                </ul>
+            </div>
+            
+            <div class="additional-info">
+                <div class="story-label">Información adicional:</div>
+                <div class="story-content">La galería debe incluir fotos de habitaciones, áreas comunes y servicios.</div>
+            </div>
+            
+            <div class="footer-text">Fuente: Elaboración propia</div>
+        </div>
+
+        <!-- H-006 -->
+        <div class="user-story">
+            <h2 class="story-header">H-006: Footer con datos de contacto y sedes</h2>
+            
+            <div class="story-section">
+                <div class="story-label">Como:</div>
+                <div class="story-content">visitante del sitio web</div>
+            </div>
+            
+            <div class="story-section">
+                <div class="story-label">Quiero:</div>
+                <div class="story-content">acceder fácilmente a información de contacto y ubicación de las sedes</div>
+            </div>
+            
+            <div class="story-section">
+                <div class="story-label">Para:</div>
+                <div class="story-content">comunicarme con el hotel o ubicar la sede más cercana</div>
+            </div>
+            
+            <div class="criteria-box">
+                <div class="criteria-title">Criterios de aceptación:</div>
+                <ul>
+                    <li>Debe mostrar teléfonos, correos y direcciones de todas las sedes</li>
+                    <li>Debe incluir enlaces a redes sociales</li>
+                    <li>Debe estar visible en todas las páginas del sitio</li>
+                    <li>Debe incluir mapa de ubicación</li>
+                </ul>
+            </div>
+            
+            <div class="additional-info">
+                <div class="story-label">Información adicional:</div>
+                <div class="story-content">El footer debe mantener consistencia visual en todo el sitio.</div>
+            </div>
+            
+            <div class="footer-text">Fuente: Elaboración propia</div>
+        </div>
+
+        <!-- H-007 -->
+        <div class="user-story">
+            <h2 class="story-header">H-007: Banner promocional e indicadores clave</h2>
+            
+            <div class="story-section">
+                <div class="story-label">Como:</div>
+                <div class="story-content">administrador de marketing</div>
+            </div>
+            
+            <div class="story-section">
+                <div class="story-label">Quiero:</div>
+                <div class="story-content">mostrar banners promocionales e indicadores destacados en la página de inicio</div>
+            </div>
+            
+            <div class="story-section">
+                <div class="story-label">Para:</div>
+                <div class="story-content">captar la atención de los visitantes y promover ofertas especiales</div>
+            </div>
+            
+            <div class="criteria-box">
+                <div class="criteria-title">Criterios de aceptación:</div>
+                <ul>
+                    <li>Debe permitir cargar imágenes para banners promocionales</li>
+                    <li>Debe mostrar indicadores como años de experiencia, clientes satisfechos</li>
+                    <li>El banner debe ser responsivo y con transiciones</li>
+                    <li>Debe permitir programar vigencia de promociones</li>
+                </ul>
+            </div>
+            
+            <div class="additional-info">
+                <div class="story-label">Información adicional:</div>
+                <div class="story-content">Los banners deben cargarse de forma optimizada para no afectar el rendimiento.</div>
+            </div>
+            
+            <div class="footer-text">Fuente: Elaboración propia</div>
+        </div>
+
+        <!-- H-008 -->
+        <div class="user-story">
+            <h2 class="story-header">H-008: Información de misión, visión y valores</h2>
+            
+            <div class="story-section">
+                <div class="story-label">Como:</div>
+                <div class="story-content">visitante del sitio web</div>
+            </div>
+            
+            <div class="story-section">
+                <div class="story-label">Quiero:</div>
+                <div class="story-content">conocer la misión, visión y valores del hotel</div>
+            </div>
+            
+            <div class="story-section">
+                <div class="story-label">Para:</div>
+                <div class="story-content">entender la filosofía y compromiso de la empresa hotelera</div>
+            </div>
+            
+            <div class="criteria-box">
+                <div class="criteria-title">Criterios de aceptación:</div>
+                <ul>
+                    <li>Debe mostrar misión, visión y valores institucionales</li>
+                    <li>El contenido debe ser claro y de fácil lectura</li>
+                    <li>Debe incluir diseño atractivo con iconografía</li>
+                    <li>Debe estar accesible desde la página principal</li>
+                </ul>
+            </div>
+            
+            <div class="additional-info">
+                <div class="story-label">Información adicional:</div>
+                <div class="story-content">Esta sección refuerza la identidad corporativa del hotel.</div>
+            </div>
+            
+            <div class="footer-text">Fuente: Elaboración propia</div>
+        </div>
+
+        <!-- H-009 -->
+        <div class="user-story">
+            <h2 class="story-header">H-009: Módulo de habitaciones con disponibilidad y tarifas</h2>
+            
+            <div class="story-section">
+                <div class="story-label">Como:</div>
+                <div class="story-content">huésped potencial</div>
+            </div>
+            
+            <div class="story-section">
+                <div class="story-label">Quiero:</div>
+                <div class="story-content">consultar la disponibilidad y tarifas de las habitaciones</div>
+            </div>
+            
+            <div class="story-section">
+                <div class="story-label">Para:</div>
+                <div class="story-content">elegir la habitación que se ajuste a mis necesidades y presupuesto</div>
+            </div>
+            
+            <div class="criteria-box">
+                <div class="criteria-title">Criterios de aceptación:</div>
+                <ul>
+                    <li>Debe mostrar tipos de habitaciones disponibles con fotos</li>
+                    <li>Debe indicar tarifas diferenciadas por temporada</li>
+                    <li>Debe mostrar disponibilidad en tiempo real</li>
+                    <li>Debe incluir descripción de servicios incluidos</li>
+                </ul>
+            </div>
+            
+            <div class="additional-info">
+                <div class="story-label">Información adicional:</div>
+                <div class="story-content">Las tarifas deben considerar días regulares y fines de semana/feriados.</div>
+            </div>
+            
+            <div class="footer-text">Fuente: Elaboración propia</div>
+        </div>
+
+        <!-- H-010 -->
+        <div class="user-story">
+            <h2 class="story-header">H-010: Módulo de clientes con historial de reservas</h2>
+            
+            <div class="story-section">
+                <div class="story-label">Como:</div>
+                <div class="story-content">recepcionista del hotel</div>
+            </div>
+            
+            <div class="story-section">
+                <div class="story-label">Quiero:</div>
+                <div class="story-content">registrar y consultar información de clientes con su historial de reservas</div>
+            </div>
+            
+            <div class="story-section">
+                <div class="story-label">Para:</div>
+                <div class="story-content">brindar un servicio personalizado y llevar un registro completo de huéspedes</div>
+            </div>
+            
+            <div class="criteria-box">
+                <div class="criteria-title">Criterios de aceptación:</div>
+                <ul>
+                    <li>Debe registrar datos personales y de contacto del cliente</li>
+                    <li>Debe mostrar historial completo de reservas pasadas</li>
+                    <li>Debe permitir búsqueda por nombre, DNI o email</li>
+                    <li>Debe indicar preferencias y observaciones del cliente</li>
+                </ul>
+            </div>
+            
+            <div class="additional-info">
+                <div class="story-label">Información adicional:</div>
+                <div class="story-content">El sistema debe cumplir con normativas de protección de datos personales.</div>
+            </div>
+            
+            <div class="footer-text">Fuente: Elaboración propia</div>
+        </div>
+
+        <!-- H-011 -->
+        <div class="user-story">
+            <h2 class="story-header">H-011: Gestión de usuarios (roles: admin, recepcionista)</h2>
+            
+            <div class="story-section">
+                <div class="story-label">Como:</div>
+                <div class="story-content">administrador del sistema</div>
+            </div>
+            
+            <div class="story-section">
+                <div class="story-label">Quiero:</div>
+                <div class="story-content">gestionar usuarios y asignar roles con permisos específicos</div>
+            </div>
+            
+            <div class="story-section">
+                <div class="story-label">Para:</div>
+                <div class="story-content">controlar el acceso al sistema según las funciones de cada empleado</div>
+            </div>
+            
+            <div class="criteria-box">
+                <div class="criteria-title">Criterios de aceptación:</div>
+                <ul>
+                    <li>Debe permitir crear, editar y eliminar usuarios</li>
+                    <li>Debe asignar roles: administrador y recepcionista</li>
+                    <li>Cada rol debe tener permisos diferenciados</li>
+                    <li>Debe incluir sistema de autenticación seguro</li>
+                </ul>
+            </div>
+            
+            <div class="additional-info">
+                <div class="story-label">Información adicional:</div>
+                <div class="story-content">El administrador tiene acceso completo, el recepcionista acceso operativo.</div>
+            </div>
+            
+            <div class="footer-text">Fuente: Elaboración propia</div>
+        </div>
+
+        <!-- H-012 -->
+        <div class="user-story">
+            <h2 class="story-header">H-012: Subida y gestión de fotografías y videos del hotel</h2>
+            
+            <div class="story-section">
+                <div class="story-label">Como:</div>
+                <div class="story-content">administrador de contenido</div>
+            </div>
+            
+            <div class="story-section">
+                <div class="story-label">Quiero:</div>
+                <div class="story-content">cargar y organizar fotografías y videos de las instalaciones</div>
+            </div>
+            
+            <div class="story-section">
+                <div class="story-label">Para:</div>
+                <div class="story-content">mantener actualizada la galería visual del hotel en el sitio web</div>
+            </div>
+            
+            <div class="criteria-box">
+                <div class="criteria-title">Criterios de aceptación:</div>
+                <ul>
+                    <li>Debe permitir subir imágenes en formatos JPG, PNG</li>
+                    <li>Debe permitir subir videos en formatos MP4</li>
+                    <li>Debe organizar contenido por categorías (habitaciones, áreas, eventos)</li>
+                    <li>Debe optimizar automáticamente el tamaño de archivos</li>
+                </ul>
+            </div>
+            
+            <div class="additional-info">
+                <div class="story-label">Información adicional:</div>
+                <div class="story-content">El sistema debe validar formato y tamaño máximo de archivos.</div>
+            </div>
+            
+            <div class="footer-text">Fuente: Elaboración propia</div>
+        </div>
+
+        <!-- H-013 -->
+        <div class="user-story">
+            <h2 class="story-header">H-013: Módulo de pagos con integración de pasarelas</h2>
+            
+            <div class="story-section">
+                <div class="story-label">Como:</div>
+                <div class="story-content">huésped del hotel</div>
+            </div>
+            
+            <div class="story-section">
+                <div class="story-label">Quiero:</div>
+                <div class="story-content">realizar pagos en línea de forma segura</div>
+            </div>
+            
+            <div class="story-section">
+                <div class="story-label">Para:</div>
+                <div class="story-content">confirmar mis reservas y pagar servicios adicionales fácilmente</div>
+            </div>
+            
+            <div class="criteria-box">
+                <div class="criteria-title">Criterios de aceptación:</div>
+                <ul>
+                    <li>Debe integrar pasarelas de pago (tarjetas, transferencias)</li>
+                    <li>Debe registrar todas las transacciones realizadas</li>
+                    <li>Debe generar comprobantes de pago automáticamente</li>
+                    <li>Debe cumplir con estándares de seguridad PCI DSS</li>
+                </ul>
+            </div>
+            
+            <div class="additional-info">
+                <div class="story-label">Información adicional:</div>
+                <div class="story-content">Los pagos deben procesarse de forma encriptada y segura.</div>
+            </div>
+            
+            <div class="footer-text">Fuente: Elaboración propia</div>
+        </div>
+
+        <!-- H-014 -->
+        <div class="user-story">
+            <h2 class="story-header">H-014: Notificaciones automáticas por WhatsApp y Email</h2>
+            
+            <div class="story-section">
+                <div class="story-label">Como:</div>
+                <div class="story-content">administrador del hotel</div>
+            </div>
+            
+            <div class="story-section">
+                <div class="story-label">Quiero:</div>
+                <div class="story-content">recibir notificaciones automáticas de nuevas reservas</div>
+            </div>
+            
+            <div class="story-section">
+                <div class="story-label">Para:</div>
+                <div class="story-content">estar informado en tiempo real y gestionar las reservas oportunamente</div>
+            </div>
+            
+            <div class="criteria-box">
+                <div class="criteria-title">Criterios de aceptación:</div>
+                <ul>
+                    <li>Debe enviar notificaciones por WhatsApp al registrar reserva</li>
+                    <li>Debe enviar confirmación por email al cliente</li>
+                    <li>Debe incluir detalles completos de la reserva</li>
+                    <li>Debe permitir configurar plantillas de mensajes</li>
+                </ul>
+            </div>
+            
+            <div class="additional-info">
+                <div class="story-label">Información adicional:</div>
+                <div class="story-content">Las notificaciones deben ser instantáneas y confiables.</div>
+            </div>
+            
+            <div class="footer-text">Fuente: Elaboración propia</div>
+        </div>
+
+        <!-- H-015 -->
+        <div class="user-story">
+            <h2 class="story-header">H-015: Sistema de búsqueda de habitaciones disponibles</h2>
+            
+            <div class="story-section">
+                <div class="story-label">Como:</div>
+                <div class="story-content">visitante del sitio web</div>
+            </div>
+            
+            <div class="story-section">
+                <div class="story-label">Quiero:</div>
+                <div class="story-content">buscar habitaciones disponibles por fecha y sede</div>
+            </div>
+            
+            <div class="story-section">
+                <div class="story-label">Para:</div>
+                <div class="story-content">encontrar opciones que se ajusten a mis fechas de viaje</div>
+            </div>
+            
+            <div class="criteria-box">
+                <div class="criteria-title">Criterios de aceptación:</div>
+                <ul>
+                    <li>Debe permitir filtrar por fecha de entrada y salida</li>
+                    <li>Debe filtrar por sede del hotel</li>
+                    <li>Debe mostrar solo habitaciones disponibles</li>
+                    <li>Debe mostrar precio y características de cada opción</li>
+                </ul>
+            </div>
+            
+            <div class="additional-info">
+                <div class="story-label">Información adicional:</div>
+                <div class="story-content">El buscador debe estar visible en la página principal.</div>
+            </div>
+            
+            <div class="footer-text">Fuente: Elaboración propia</div>
+        </div>
+
+        <!-- H-016 -->
+        <div class="user-story">
+            <h2 class="story-header">H-016: Gestión de sedes hoteleras</h2>
+            
+            <div class="story-section">
+                <div class="story-label">Como:</div>
+                <div class="story-content">administrador del sistema</div>
+            </div>
+            
+            <div class="story-section">
+                <div class="story-label">Quiero:</div>
+                <div class="story-content">registrar y gestionar las diferentes sedes del hotel</div>
+            </div>
+            
+            <div class="story-section">
+                <div class="story-label">Para:</div>
+                <div class="story-content">organizar la información y operaciones de cada ubicación</div>
+            </div>
+            
+            <div class="criteria-box">
+                <div class="criteria-title">Criterios de aceptación:</div>
+                <ul>
+                    <li>Debe permitir registrar nombre, dirección y contacto de cada sede</li>
+                    <li>Debe asociar habitaciones a cada sede específica</li>
+                    <li>Debe mostrar información de cada sede en el sitio web</li>
+                    <li>Debe permitir activar/desactivar sedes</li>
+                </ul>
+            </div>
+            
+            <div class="additional-info">
+                <div class="story-label">Información adicional:</div>
+                <div class="story-content">Cada sede puede tener configuraciones y tarifas diferentes.</div>
+            </div>
+            
+            <div class="footer-text">Fuente: Elaboración propia</div>
+        </div>
+
+        <!-- H-017 -->
+        <div class="user-story">
+            <h2 class="story-header">H-017: Catálogo de servicios adicionales</h2>
+            
+            <div class="story-section">
+                <div class="story-label">Como:</div>
+                <div class="story-content">huésped del hotel</div>
+            </div>
+            
+            <div class="story-section">
+                <div class="story-label">Quiero:</div>
+                <div class="story-content">conocer y solicitar servicios adicionales</div>
+            </div>
+            
+            <div class="story-section">
+                <div class="story-label">Para:</div>
+                <div class="story-content">mejorar mi experiencia de hospedaje con opciones personalizadas</div>
+            </div>
+            
+            <div class="criteria-box">
+                <div class="criteria-title">Criterios de aceptación:</div>
+                <ul>
+                    <li>Debe mostrar servicios como decoración, desayuno, spa</li>
+                    <li>Debe incluir descripción y precio de cada servicio</li>
+                    <li>Debe permitir agregar servicios a la reserva</li>
+                    <li>Debe incluir imágenes de referencia</li>
+                </ul>
+            </div>
+            
+            <div class="additional-info">
+                <div class="story-label">Información adicional:</div>
+                <div class="story-content">Los servicios deben estar organizados por categorías.</div>
+            </div>
+            
+            <div class="footer-text">Fuente: Elaboración propia</div>
+        </div>
+
+        <!-- H-018 -->
+        <div class="user-story">
+            <h2 class="story-header">H-018: Reportes de ocupación y estadísticas</h2>
+            
+            <div class="story-section">
+                <div class="story-label">Como:</div>
+                <div class="story-content">administrador del hotel</div>
+            </div>
+            
+            <div class="story-section">
+                <div class="story-label">Quiero:</div>
+                <div class="story-content">generar reportes de ocupación y estadísticas del negocio</div>
+            </div>
+            
+            <div class="story-section">
+                <div class="story-label">Para:</div>
+                <div class="story-content">analizar el desempeño del negocio y tomar decisiones estratégicas</div>
+            </div>
+            
+            <div class="criteria-box">
+                <div class="criteria-title">Criterios de aceptación:</div>
+                <ul>
+                    <li>Debe generar reportes de ocupación por periodo (día/semana/mes)</li>
+                    <li>Debe incluir gráficos estadísticos visuales</li>
+                    <li>Debe permitir exportar reportes en PDF y Excel</li>
+                    <li>Debe mostrar comparativas entre sedes y periodos</li>
+                </ul>
+            </div>
+            
+            <div class="additional-info">
+                <div class="story-label">Información adicional:</div>
+                <div class="story-content">Los reportes deben incluir métricas de ingresos, ocupación y tendencias.</div>
+            </div>
+            
+            <div class="footer-text">Fuente: Elaboración propia</div>
+        </div>
+
+        <!-- H-019 -->
+        <div class="user-story">
+            <h2 class="story-header">H-019: Sistema de valoraciones y comentarios</h2>
+            
+            <div class="story-section">
+                <div class="story-label">Como:</div>
+                <div class="story-content">huésped que ha completado su estadía</div>
+            </div>
+            
+            <div class="story-section">
+                <div class="story-label">Quiero:</div>
+                <div class="story-content">dejar comentarios y calificación sobre mi experiencia</div>
+            </div>
+            
+            <div class="story-section">
+                <div class="story-label">Para:</div>
+                <div class="story-content">compartir mi opinión y ayudar a otros viajeros en su decisión</div>
+            </div>
+            
+            <div class="criteria-box">
+                <div class="criteria-title">Criterios de aceptación:</div>
+                <ul>
+                    <li>Debe permitir calificar con estrellas (1-5)</li>
+                    <li>Debe permitir escribir comentarios detallados</li>
+                    <li>Debe mostrar valoraciones en la página pública</li>
+                    <li>Debe calcular promedio de calificaciones automáticamente</li>
+                </ul>
+            </div>
+            
+            <div class="additional-info">
+                <div class="story-label">Información adicional:</div>
+                <div class="story-content">El sistema debe validar que solo huéspedes confirmados puedan opinar.</div>
+            </div>
+            
+            <div class="footer-text">Fuente: Elaboración propia</div>
+        </div>
+
+        <!-- H-020 -->
+        <div class="user-story">
+            <h2 class="story-header">H-020: Libro de reclamaciones digital</h2>
+            
+            <div class="story-section">
+                <div class="story-label">Como:</div>
+                <div class="story-content">huésped del hotel</div>
+            </div>
+            
+            <div class="story-section">
+                <div class="story-label">Quiero:</div>
+                <div class="story-content">registrar quejas o reclamos formales</div>
+            </div>
+            
+            <div class="story-section">
+                <div class="story-label">Para:</div>
+                <div class="story-content">reportar problemas y obtener soluciones oportunas</div>
+            </div>
+            
+            <div class="criteria-box">
+                <div class="criteria-title">Criterios de aceptación:</div>
+                <ul>
+                    <li>Debe generar número de reclamo único</li>
+                    <li>Debe registrar datos del reclamante y detalle del problema</li>
+                    <li>Debe cumplir con requisitos legales del libro de reclamaciones</li>
+                    <li>Debe notificar al área correspondiente automáticamente</li>
+                </ul>
+            </div>
+            
+            <div class="additional-info">
+                <div class="story-label">Información adicional:</div>
+                <div class="story-content">El sistema debe cumplir normativas INDECOPI para libro de reclamaciones.</div>
+            </div>
+            
+            <div class="footer-text">Fuente: Elaboración propia</div>
+        </div>
+
+        <!-- H-021 -->
+        <div class="user-story">
+            <h2 class="story-header">H-021: Sección de preguntas frecuentes (FAQ)</h2>
+            
+            <div class="story-section">
+                <div class="story-label">Como:</div>
+                <div class="story-content">visitante del sitio web</div>
+            </div>
+            
+            <div class="story-section">
+                <div class="story-label">Quiero:</div>
+                <div class="story-content">consultar preguntas frecuentes sobre servicios y políticas</div>
+            </div>
+            
+            <div class="story-section">
+                <div class="story-label">Para:</div>
+                <div class="story-content">resolver dudas comunes antes de realizar una reserva</div>
+            </div>
+            
+            <div class="criteria-box">
+                <div class="criteria-title">Criterios de aceptación:</div>
+                <ul>
+                    <li>Debe organizar preguntas por categorías</li>
+                    <li>Debe incluir respuestas claras y completas</li>
+                    <li>Debe permitir búsqueda de preguntas específicas</li>
+                    <li>Debe ser fácilmente actualizable por el administrador</li>
+                </ul>
+            </div>
+            
+            <div class="additional-info">
+                <div class="story-label">Información adicional:</div>
+                <div class="story-content">Las categorías pueden incluir: reservas, pagos, políticas, servicios.</div>
+            </div>
+            
+            <div class="footer-text">Fuente: Elaboración propia</div>
+        </div>
+
+        <!-- H-022 -->
+        <div class="user-story">
+            <h2 class="story-header">H-022: Panel de configuración de tarifas y promociones</h2>
+            
+            <div class="story-section">
+                <div class="story-label">Como:</div>
+                <div class="story-content">administrador del hotel</div>
+            </div>
+            
+            <div class="story-section">
+                <div class="story-label">Quiero:</div>
+                <div class="story-content">configurar tarifas, descuentos y promociones especiales</div>
+            </div>
+            
+            <div class="story-section">
+                <div class="story-label">Para:</div>
+                <div class="story-content">ajustar precios según temporada y crear ofertas atractivas</div>
+            </div>
+            
+            <div class="criteria-box">
+                <div class="criteria-title">Criterios de aceptación:</div>
+                <ul>
+                    <li>Debe permitir configurar tarifas por tipo de habitación</li>
+                    <li>Debe diferenciar precios entre días regulares y fines de semana</li>
+                    <li>Debe permitir crear promociones con vigencia definida</li>
+                    <li>Debe aplicar descuentos automáticamente según reglas configuradas</li>
+                </ul>
+            </div>
+            
+            <div class="additional-info">
+                <div class="story-label">Información adicional:</div>
+                <div class="story-content">El sistema debe validar coherencia de precios y evitar conflictos de tarifas.</div>
+            </div>
+            
+            <div class="footer-text">Fuente: Elaboración propia</div>
+        </div>
+
+    </div>
+</body>
+</html>
