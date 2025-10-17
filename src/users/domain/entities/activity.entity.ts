@@ -3,6 +3,7 @@ export class Activity {
         public lastActive: Date,
         public isOnline: boolean = true,
         public joinDate: Date,
-        public profileCompletion: number
+        public profileCompletion: number,
+        public lastSeenAt?: Date 
     ) { }
 }

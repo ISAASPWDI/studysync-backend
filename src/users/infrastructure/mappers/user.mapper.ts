@@ -98,6 +98,7 @@ export class UserMapper {
             this.mapObjectives(userDoc.objectives),
             this.mapActivity(userDoc.activity),
             this.mapPrivacy(userDoc.privacy),
+            userDoc.password,
         );
     }
 

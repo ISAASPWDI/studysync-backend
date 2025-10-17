@@ -13,6 +13,8 @@ import { GoogleStrategy } from './infrastructure/strategies/google.strategy';
 import { GoogleAuthService } from './infrastructure/adapters/google-auth-service';
 import { ConfigModule } from '@nestjs/config';
 import { JwtStrategy } from './infrastructure/strategies/jwt.strategy';
+import { TokenBlacklist, TokenBlacklistSchema } from './infrastructure/schemas/token-blacklist.schema';
+import { JwtConfigModule } from 'src/shared/jwt/jwt.module';
 
 
 @Module({
@@ -24,12 +26,13 @@ import { JwtStrategy } from './infrastructure/strategies/jwt.strategy';
       {
         name: User.name,
         schema: UserSchema
+      },
+      {
+        name: TokenBlacklist.name,
+        schema: TokenBlacklistSchema
       }
     ]),
-    JwtModule.register({
-      secret: "abc123", //falta reemplazar por uno seguro y ponerlo en el .env
-      signOptions: { expiresIn: "7d" }
-    })
+    JwtConfigModule
   ],
   controllers: [AuthController],
   providers: [

@@ -51,7 +51,7 @@ export class AuthService {
     }
 
     async register(registerDTO: RegisterUserDTO): Promise<AuthLoginResponseDTO> {
-        const defaultPicture = 'https://cdn-icons-png.flaticon.com/512/3237/3237472.png';
+        const defaultPicture = 'https://media.istockphoto.com/id/1403254043/vector/3d-realistic-person-or-people.webp?b=1&s=612x612&w=0&k=20&c=aQG4ssR4X8e0GtZ93nRwxbJZrTI8aKclhER_UkSm8Qo=';
         const existingUser = await this.authRepository.findUserByEmail(registerDTO.email);
 
         if (existingUser) {
@@ -196,5 +196,11 @@ export class AuthService {
         );
 
         return { user: userResponse, token, sessionMethod: provider, isNewUser, picture };
+    }
+    async isBlackListed(token: string): Promise<boolean>{
+        return await this.authRepository.isBlacklisted(token);
+    }
+    async addToBlacklist(token: string, expiresInSeconds: number): Promise<void>{
+        return await this.authRepository.addToBlacklist(token, expiresInSeconds);
     }
 }

@@ -30,7 +30,7 @@ export class UsersService {
         return this.userRepository.create(user);
     }
     // Actualizar el onboarding
-    async upsertUser(userId: string, body: UpsertUserDTO): Promise<User | null>{
+    async upsertUser(userId: string, body: UpsertUserDTO): Promise<User | null> {
         return this.userRepository.update(userId, body);
     }
     // Actualizar solo perfil general
@@ -38,10 +38,10 @@ export class UsersService {
         return this.userRepository.updateProfile(userId, body);
     }
     // Actualizar solo skills 
-    async updateSkills(userId: string, newSkills: UpdateSkillsDTO): Promise<User | null>{
+    async updateSkills(userId: string, newSkills: UpdateSkillsDTO): Promise<User | null> {
         return this.userRepository.updateSkills(userId, newSkills);
     }
-    async updateAvailability ( userId: string, newValues: UpdateAvailabilityDTO): Promise<User | null> {
+    async updateAvailability(userId: string, newValues: UpdateAvailabilityDTO): Promise<User | null> {
         return this.userRepository.updateAvailability(userId, newValues);
     }
     async getUserById(id: string): Promise<User | null> {
@@ -50,5 +50,12 @@ export class UsersService {
 
     async getUserByEmail(email: string): Promise<User | null> {
         return this.userRepository.findByEmail(email);
+    }
+    async updateLastSeen(userId: string): Promise<void> {
+        this.userRepository.updateLastSeen(userId);
+
+    }
+    async isUserOnline(lastSeenAt: Date | null): Promise<boolean> {
+        return this.userRepository.isUserOnline(lastSeenAt);
     }
 }

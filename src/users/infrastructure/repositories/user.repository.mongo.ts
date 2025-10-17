@@ -16,6 +16,23 @@ export class UserRepositoryMongo implements UserRepository {
   constructor(
     @InjectModel(User.name) private readonly userModel: Model<UserDocument>,
   ) { }
+  async isUserOnline(lastSeenAt: Date | null): Promise<boolean> {
+    if (!lastSeenAt) return false;
+
+    const fiveMinutesAgo = new Date(Date.now() - 5 * 60 * 1000);
+    return new Date(lastSeenAt) > fiveMinutesAgo;
+  }
+  async updateLastSeen(userId: string): Promise<void> {
+    await this.userModel.findByIdAndUpdate(
+      userId,
+      {
+        $set: {
+          'activity.lastSeenAt': new Date()
+        }
+      },
+      { new: true }
+    );
+  }
 
   async findById(id: string): Promise<User | null> {
     const userDoc = await this.userModel.findById(id).exec();
@@ -69,7 +86,7 @@ export class UserRepositoryMongo implements UserRepository {
     const { email } = body;
 
     const existsUser = await this.findByEmail(email);
-    if (existsUser !== null) throw new UnauthorizedException('Ya existe un usuario con este email');
+    if (existsUser && existsUser.id !== userFinded.id) throw new UnauthorizedException('Ya existe un usuario con este email');
     // ⭐ Merge: mantener datos existentes si no vienen nuevos
     const formattedUser = UserHelpers.buildUpdateUser(userFinded, body);
     const toUpdate = UserMapper.toPersistence(formattedUser);

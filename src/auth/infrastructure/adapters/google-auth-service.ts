@@ -38,10 +38,11 @@ export class GoogleAuthService {
                 firstName: payload.given_name!,
                 lastName: payload.family_name!,
                 email: payload.email,
-                picture: payload.picture ?? 'https://cdn-icons-png.flaticon.com/512/3237/3237472.png'
+                picture: payload.picture ?? 'https://media.istockphoto.com/id/1403254043/vector/3d-realistic-person-or-people.webp?b=1&s=612x612&w=0&k=20&c=aQG4ssR4X8e0GtZ93nRwxbJZrTI8aKclhER_UkSm8Qo='
             }
 
         } catch (error) {
+            console.error('Error real:', error);
             throw new UnauthorizedException('Error al verificar el token de Google');
         }
 

@@ -6,6 +6,8 @@ import { AuthService } from './application/auth.service';
 import { RegisterUserDTO } from 'src/users/infrastructure/dto/user/crud/register-user.dto';
 import type { Response } from 'express';
 import { GoogleAuthService } from './infrastructure/adapters/google-auth-service';
+import { GetUser } from 'src/users/infrastructure/decorators/get-user.decorator';
+import { GetToken } from './infrastructure/decorators/get-token.decorator';
 
 @Controller('auth')
 export class AuthController {
@@ -26,7 +28,6 @@ export class AuthController {
             credentials.password
         );
 
-        // Poner el token en el header Authorization
         res.setHeader('Authorization', `Bearer ${loginResult.token}`);
 
         return loginResult;
@@ -35,6 +36,27 @@ export class AuthController {
     @Post('register')
     async register(@Body() credentials: RegisterUserDTO) {
         return await this.authService.register(credentials);
+    }
+
+    @Get('verify')
+    @UseGuards(AuthGuard('jwt'))
+    async verifyToken(@GetUser('id') userId: string) {
+        return {
+            valid: true,
+            userId,
+            timestamp: new Date().toISOString()
+        };
+    }
+
+    @Post('logout')
+    @UseGuards(AuthGuard('jwt'))
+    async logout(@GetToken() token: string) {
+        
+        const expiresInSeconds = 7 * 24 * 60 * 60;
+
+        await this.authService.addToBlacklist(token, expiresInSeconds);
+
+        return { success: true, message: 'Sesión cerrada correctamente' };
     }
 
     // Para web, por ahora no hace nada

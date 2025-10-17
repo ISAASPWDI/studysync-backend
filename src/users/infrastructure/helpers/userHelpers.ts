@@ -9,7 +9,7 @@ export class UserHelpers {
         return new User(
             existingUser.id,
             updateData.email ?? existingUser.email,
-            existingUser.password,
+            existingUser.picture,
             updateData.profile
                 ? UserMapper.profileToEntity(updateData.profile)
                 : existingUser.profile,
@@ -24,7 +24,8 @@ export class UserHelpers {
                 : existingUser.activity,
             updateData.privacy
                 ? UserMapper.privacyToEntity(updateData.privacy)
-                : existingUser.privacy
+                : existingUser.privacy,
+            existingUser.password,
         );
     }
 }

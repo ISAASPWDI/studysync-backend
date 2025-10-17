@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Patch, Post, Put, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Param, Patch, Post, Put, UseGuards } from '@nestjs/common';
 import { UsersService } from './application/users.service';
 import { CreateUserDTO } from './infrastructure/dto/user/crud/create-user.dto';
 import { User } from './domain/entities/user.entity';
@@ -28,6 +28,7 @@ export class UsersController {
         @GetUser('id') userId: string,
     ): Promise<UserResponseDTO | null> {
         const user = await this.usersService.getUserById(userId);
+        await this.usersService.updateLastSeen(userId);
         return user;
     }
 
@@ -69,4 +70,23 @@ export class UsersController {
         const user = await this.usersService.updateAvailability(userId, newValues);
         return user;
     }
+
+    @Patch('last-seen')
+    @UseGuards(AuthGuard('jwt'))
+    async updateLastSeen(@GetUser('id') userId: string) {
+        await this.usersService.updateLastSeen(userId);
+        return {
+            success: true,
+            lastSeenAt: new Date().toISOString()
+        };
+    }
+    @Get(':userId')
+    @UseGuards(AuthGuard('jwt'))
+    async getUserById(
+        @Param('userId') userId: string,
+    ): Promise<Omit<User, 'password'> | null> {
+        const user = await this.usersService.getUserById(userId);
+        return user;
+    }
+
 }

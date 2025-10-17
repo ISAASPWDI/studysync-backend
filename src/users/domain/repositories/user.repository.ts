@@ -16,4 +16,6 @@ export abstract class UserRepository {
     abstract updateProfile(userId: string, body: UpdateGeneralProfileDTO): Promise<User | null>;
     abstract updateAvailability(userId: string, newValues: UpdateAvailabilityDTO): Promise<User | null>;
     abstract delete(id: string): Promise<void>;
+    abstract updateLastSeen(userId: string): Promise<void>;
+    abstract isUserOnline(lastSeenAt: Date | null): Promise<boolean>;
 }

@@ -5,6 +5,10 @@ export type ActivityDocument = HydratedDocument<Activity>;
 
 @Schema({ _id: false })
 export class Activity {
+  
+  @Prop({ default: Date.now })
+  lastSeenAt?: Date;
+
   @Prop({ type: Date })
   lastActive: Date;
 
