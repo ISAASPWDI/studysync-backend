@@ -8,40 +8,51 @@ import {
   ConnectedSocket,
 } from '@nestjs/websockets';
 import { Server, Socket } from 'socket.io';
-import { UseGuards, Logger } from '@nestjs/common';
+import { UseGuards, Logger, InternalServerErrorException } from '@nestjs/common';
 import { MessagesService } from '../../application/messages.service';
 import { WsAuthGuard } from './guards/ws-auth.guard';
 import { JwtService } from '@nestjs/jwt';
+import { ConfigService } from '@nestjs/config';
 
 interface AuthenticatedSocket extends Socket {
   userId: string;
 }
 
-@WebSocketGateway({
-  cors: {
-    origin: '*', // En producción, especifica tu dominio
-    credentials: true,
-  },
-//   namespace: '/messages',
-})
+@WebSocketGateway()
 export class MessagesGateway implements OnGatewayConnection, OnGatewayDisconnect {
   @WebSocketServer()
   server: Server;
 
   private readonly logger = new Logger(MessagesGateway.name);
-  private readonly userSockets = new Map<string, Set<string>>(); // userId -> Set<socketId>
+  private readonly userSockets = new Map<string, Set<string>>();
 
-  constructor(private readonly messagesService: MessagesService,
-    private readonly jwtService: JwtService,) {}
+  constructor(
+    private readonly messagesService: MessagesService,
+    private readonly jwtService: JwtService,
+    private readonly configService: ConfigService
+  ) { }
 
+  afterInit(server: Server) {
+    const clientUrl = this.configService.get<string>('CLIENT_URL');
+
+    if (!clientUrl) {
+      this.logger.error('❌ CLIENT_URL no está definido en el archivo .env');
+      throw new InternalServerErrorException('CLIENT_URL no está definido en las variables de entorno');
+    }
+    server.engine.opts.cors = {
+      origin: clientUrl,
+      credentials: true,
+    };
+
+    this.logger.log(`🌐 WebSocket CORS configurado para: ${clientUrl}`);
+  }
   // Conexión de cliente
   async handleConnection(client: AuthenticatedSocket) {
     try {
       this.logger.log(`🔌 Client attempting connection: ${client.id}`);
 
-      // Extraer y validar token
       const token = this.extractToken(client);
-      
+
       if (!token) {
         this.logger.error('❌ No token provided');
         client.disconnect();
@@ -88,7 +99,7 @@ export class MessagesGateway implements OnGatewayConnection, OnGatewayDisconnect
         const userSocketSet = this.userSockets.get(userId);
         if (userSocketSet) {
           userSocketSet.delete(client.id);
-          
+
           // Si no quedan sockets para este usuario, está offline
           if (userSocketSet.size === 0) {
             this.userSockets.delete(userId);
@@ -103,7 +114,7 @@ export class MessagesGateway implements OnGatewayConnection, OnGatewayDisconnect
       this.logger.error(`❌ Disconnection error: ${error.message}`);
     }
   }
-   private extractToken(client: Socket): string | null {
+  private extractToken(client: Socket): string | null {
     // Intentar desde query
     const queryToken = client.handshake.query.token as string;
     if (queryToken) {
@@ -167,7 +178,7 @@ export class MessagesGateway implements OnGatewayConnection, OnGatewayDisconnect
       const chatParticipants = await this.messagesService.getChatParticipants(
         data.chatId,
       );
-      
+
       for (const participantId of chatParticipants) {
         if (participantId !== userId) {
           const unreadCount = await this.messagesService.getUnreadCount(
@@ -284,7 +295,7 @@ export class MessagesGateway implements OnGatewayConnection, OnGatewayDisconnect
   private async emitUserStatusToContacts(userId: string, status: 'online' | 'offline') {
     try {
       const contacts = await this.messagesService.getUserContacts(userId);
-      
+
       contacts.forEach(contactId => {
         this.emitToUser(contactId, 'userStatusChange', {
           userId,

@@ -12,7 +12,7 @@ export abstract class UserRepository {
     abstract findByEmailOrThrow(email: string): Promise<User>;
     abstract create(user: User): Promise<User>;
     abstract update(userId: string, user: UpsertUserDTO): Promise<User | null>;
-    abstract updateSkills(userId: string, newSkills: UpdateSkillsDTO): Promise<User | null>;
+    abstract updateSkills(userId: string, body: UpdateSkillsDTO): Promise<User | null>;
     abstract updateProfile(userId: string, body: UpdateGeneralProfileDTO): Promise<User | null>;
     abstract updateAvailability(userId: string, newValues: UpdateAvailabilityDTO): Promise<User | null>;
     abstract delete(id: string): Promise<void>;

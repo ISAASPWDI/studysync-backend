@@ -4,7 +4,6 @@ import { CreateUserDTO } from '../infrastructure/dto/user/crud/create-user.dto';
 import { User } from '../domain/entities/user.entity';
 import { UpsertUserDTO } from '../infrastructure/dto/user/crud/upsert-user.dto';
 import { UpdateGeneralProfileDTO } from '../infrastructure/dto/user/crud/update-user.dto';
-import { SkillsDTO } from '../infrastructure/dto/user/entities/skills.dto';
 import { UpdateSkillsDTO } from '../infrastructure/dto/user/crud/update-skills-user.dto';
 import { UpdateAvailabilityDTO } from '../infrastructure/dto/user/crud/update-availability-user.dto';
 
@@ -38,8 +37,8 @@ export class UsersService {
         return this.userRepository.updateProfile(userId, body);
     }
     // Actualizar solo skills 
-    async updateSkills(userId: string, newSkills: UpdateSkillsDTO): Promise<User | null> {
-        return this.userRepository.updateSkills(userId, newSkills);
+    async updateSkills(userId: string, body: UpdateSkillsDTO): Promise<User | null> {
+        return this.userRepository.updateSkills(userId, body);
     }
     async updateAvailability(userId: string, newValues: UpdateAvailabilityDTO): Promise<User | null> {
         return this.userRepository.updateAvailability(userId, newValues);

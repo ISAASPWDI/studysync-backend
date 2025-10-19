@@ -1,6 +1,6 @@
 // src/swipe/application/swipe.service.ts
 
-import { Injectable, HttpException, HttpStatus, Logger } from '@nestjs/common';
+import { Injectable, HttpException, HttpStatus, Logger, InternalServerErrorException } from '@nestjs/common';
 import { HttpService } from '@nestjs/axios';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
@@ -14,20 +14,30 @@ import {
   RecommendedUserDTO,
 } from '../infrastructure/dto/swipe.dto';
 import { User, UserDocument } from 'src/users/infrastructure/schemas/user/user.schema';
+import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class SwipeService {
   private readonly logger = new Logger(SwipeService.name);
-  private readonly ML_SERVICE_URL = 'http://localhost:8000';
+  private readonly ML_SERVICE_URL: string;
 
   constructor(
     private readonly httpService: HttpService,
     @InjectModel(Match.name) private matchModel: Model<MatchDocument>,
     @InjectModel(User.name) private userModel: Model<UserDocument>,
-  ) {}
+    private readonly configService: ConfigService
+  ) {
+    const mlUrl = this.configService.get<string>('ML_SERVICE_URL');
+    if (!mlUrl) {
+      this.logger.error('❌ ML_SERVICE_URL no está definido en el archivo .env');
+      throw new InternalServerErrorException('ML_SERVICE_URL no está definido en las variables de entorno');
+    }
+
+    this.ML_SERVICE_URL = mlUrl;
+  }
 
   async getRecommendations(
-    userId: string, 
+    userId: string,
     limit: number
   ): Promise<GetRecommendationsResponseDTO> {
     try {
@@ -62,7 +72,7 @@ export class SwipeService {
 
     } catch (error) {
       this.logger.error(`Error getting recommendations: ${error.message}`);
-      
+
       // Si falla el ML, usar fallback
       const excludeUsers = await this.getExcludedUsers(userId);
       return this.getFallbackRecommendations(userId, excludeUsers, limit);
@@ -135,7 +145,7 @@ export class SwipeService {
             { _id: reverseMatch._id },
           ],
         },
-        { 
+        {
           status: 'accepted',
           updatedAt: new Date(),
         }
@@ -156,8 +166,8 @@ export class SwipeService {
     return {
       success: true,
       action: action,
-      message: action === 'superlike' 
-        ? 'Super like enviado' 
+      message: action === 'superlike'
+        ? 'Super like enviado'
         : 'Like enviado, esperando respuesta',
       isMatch: false,
       matchId: newMatch._id.toString(),
@@ -173,7 +183,7 @@ export class SwipeService {
       ],
     }).select('user1 user2');
 
-    const excludedIds = matches.flatMap(match => 
+    const excludedIds = matches.flatMap(match =>
       [match.user1.toString(), match.user2.toString()]
     );
 
@@ -198,7 +208,7 @@ export class SwipeService {
 
     return recommendations.map(rec => {
       const user = userMap.get(rec.user_id);
-      
+
       if (!user) {
         this.logger.warn(`User ${rec.user_id} not found in MongoDB`);
         return null;
@@ -237,10 +247,10 @@ export class SwipeService {
     this.logger.warn('Using fallback recommendations');
 
     const users = await this.userModel
-      .find({ 
-        _id: { 
-          $nin: excludeUsers.map(id => id) 
-        } 
+      .find({
+        _id: {
+          $nin: excludeUsers.map(id => id)
+        }
       })
       .select('email profile skills objectives activity privacy')
       .limit(limit)

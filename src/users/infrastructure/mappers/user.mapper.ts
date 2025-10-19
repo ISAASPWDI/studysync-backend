@@ -115,10 +115,12 @@ export class UserMapper {
             privacy: this.mapPrivacyToPersistence(user.privacy),
         };
     }
-    static toSkillsPersistence(skills: Pick<UpsertUserDTO, "skills">): Pick<UserSchema, "skills"> {
-        const formattedSkills = this.skillsToEntity(skills.skills)
+    static toSkillsPersistence(body: Pick<UpsertUserDTO, "skills" | "activity">): Pick<UserSchema, "skills" | "activity"> {
+        const formattedSkills = this.skillsToEntity(body.skills)
+        const formattedActivity = this.activityToEntity(body.activity)
         return {
-            skills: this.mapSkillsToPersistence(formattedSkills)
+            skills: this.mapSkillsToPersistence(formattedSkills),
+            activity: this.mapActivityToPersistence(formattedActivity)
         }
     }
     static toObjectivesPersistence(values: ObjectivesDTO): Pick<UserSchema, "objectives"> {

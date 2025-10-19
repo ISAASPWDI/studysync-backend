@@ -1,7 +1,7 @@
 // src/matches/infrastructure/mappers/match.mapper.ts
 
 import { Match as MatchEntity } from '../../domain/entities/match.entity';
-import { MatchDocument } from '../schemas/match.schema';
+
 
 export class MatchMapper {
   static toDomain(matchDoc: any): MatchEntity {

@@ -55,9 +55,11 @@ export class UsersController {
     @UseGuards(AuthGuard('jwt'))
     async updateSkills(
         @GetUser('id') userId: string,
-        @Body() newSkills: UpdateSkillsDTO
+        @Body() body: UpdateSkillsDTO
     ): Promise<User | null> {
-        const user = await this.usersService.updateSkills(userId, newSkills);
+        console.log("body received: ", body);
+        
+        const user = await this.usersService.updateSkills(userId, body);
         return user;
     }
 

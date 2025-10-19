@@ -1,6 +1,7 @@
 import { IsOptional, IsString, IsNumber, ValidateNested } from 'class-validator';
 import { Type } from 'class-transformer';
 import { LocationDTO } from './location.dto';
+import { ActivityDTO } from './activity.dto';
 
 export class ProfileDTO {
   @IsOptional()
@@ -39,4 +40,8 @@ export class ProfileDTO {
   @IsOptional()
   @IsString()
   bio?: string;
+
+  @IsOptional()
+  @Type(() => ActivityDTO)
+  activity?: ActivityDTO;
 }

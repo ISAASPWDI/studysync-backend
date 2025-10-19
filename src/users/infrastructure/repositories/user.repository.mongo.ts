@@ -98,10 +98,10 @@ export class UserRepositoryMongo implements UserRepository {
     return updated ? UserMapper.toDomain(updated) : null;
   }
 
-  async updateSkills(userId: string, newSkills: UpdateSkillsDTO): Promise<User | null> {
+  async updateSkills(userId: string, body: UpdateSkillsDTO): Promise<User | null> {
     const userFinded = await this.findByIdOrThrow(userId);
 
-    const toUpdate = UserMapper.toSkillsPersistence(newSkills);
+    const toUpdate = UserMapper.toSkillsPersistence(body);
 
     const updated = await this.userModel.findByIdAndUpdate(userFinded.id, toUpdate, { new: true });
 
