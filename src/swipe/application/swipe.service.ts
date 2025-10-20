@@ -4,7 +4,8 @@ import { Injectable, HttpException, HttpStatus, Logger, InternalServerErrorExcep
 import { HttpService } from '@nestjs/axios';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { firstValueFrom } from 'rxjs';
+import { firstValueFrom, timeout, catchError } from 'rxjs';
+import { AxiosError } from 'axios';
 import { Match, MatchDocument } from '../../matches/infrastructure/schemas/match.schema';
 
 import {
@@ -28,12 +29,25 @@ export class SwipeService {
     private readonly configService: ConfigService
   ) {
     const mlUrl = this.configService.get<string>('ML_SERVICE_URL');
+    
+    // 🔍 DEBUG: Logging inicial
+    this.logger.log('====================================');
+    this.logger.log('🔍 CONFIGURACIÓN ML SERVICE');
+    this.logger.log(`📍 ML_SERVICE_URL desde .env: "${mlUrl}"`);
+    this.logger.log(`📍 Tipo: ${typeof mlUrl}`);
+    this.logger.log(`📍 Longitud: ${mlUrl?.length || 0} caracteres`);
+    
     if (!mlUrl) {
       this.logger.error('❌ ML_SERVICE_URL no está definido en el archivo .env');
       throw new InternalServerErrorException('ML_SERVICE_URL no está definido en las variables de entorno');
     }
 
-    this.ML_SERVICE_URL = mlUrl;
+    // Remover barra final si existe
+    this.ML_SERVICE_URL = mlUrl.endsWith('/') ? mlUrl.slice(0, -1) : mlUrl;
+    
+    this.logger.log(`✅ URL limpia: "${this.ML_SERVICE_URL}"`);
+    this.logger.log(`📍 Endpoint completo: "${this.ML_SERVICE_URL}/recommendations"`);
+    this.logger.log('====================================');
   }
 
   async getRecommendations(
@@ -41,27 +55,87 @@ export class SwipeService {
     limit: number
   ): Promise<GetRecommendationsResponseDTO> {
     try {
+      // 🔍 DEBUG: Inicio del proceso
+      this.logger.log('====================================');
+      this.logger.log(`🔍 getRecommendations - Usuario: ${userId}, Límite: ${limit}`);
+      
       const excludeUsers = await this.getExcludedUsers(userId);
+      this.logger.log(`📋 Usuarios excluidos: ${excludeUsers.length}`);
 
-      //  Llamar al servicio ML de Python
+      const requestPayload = {
+        user_id: userId,
+        exclude_users: excludeUsers,
+        limit: limit,
+      };
+
+      const fullUrl = `${this.ML_SERVICE_URL}/recommendations`;
+      
+      // 🔍 DEBUG: Detalles de la petición
+      this.logger.log('');
+      this.logger.log('📤 PETICIÓN HTTP AL ML SERVICE');
+      this.logger.log(`📍 URL: "${fullUrl}"`);
+      this.logger.log(`📍 Método: POST`);
+      this.logger.log(`📍 Payload: ${JSON.stringify(requestPayload, null, 2)}`);
+      this.logger.log('⏳ Enviando petición...');
+      const startTime = Date.now();
+
+      // Llamar al servicio ML de Python (CON DEBUG)
       const mlResponse = await firstValueFrom(
-        this.httpService.post(`${this.ML_SERVICE_URL}/recommendations`, {
-          user_id: userId,
-          exclude_users: excludeUsers,
-          limit: limit,
-        })
+        this.httpService.post(fullUrl, requestPayload).pipe(
+          timeout(55000),
+          catchError((error: AxiosError) => {
+            const elapsed = Date.now() - startTime;
+            
+            // 🔍 DEBUG: Error detallado
+            this.logger.error('');
+            this.logger.error('❌❌❌ ERROR EN PETICIÓN HTTP ❌❌❌');
+            this.logger.error(`⏱️ Tiempo: ${elapsed}ms`);
+            this.logger.error(`📍 URL intentada: "${error.config?.url}"`);
+            this.logger.error(`📍 Método: ${error.config?.method?.toUpperCase()}`);
+            this.logger.error(`📍 Error code: ${error.code}`);
+            this.logger.error(`📍 Error message: ${error.message}`);
+            
+            if (error.response) {
+              this.logger.error(`📍 HTTP Status: ${error.response.status}`);
+              this.logger.error(`📍 Status Text: ${error.response.statusText}`);
+              this.logger.error(`📍 Response Data: ${JSON.stringify(error.response.data)}`);
+            } else if (error.request) {
+              this.logger.error('📍 No se recibió respuesta del servidor');
+            } else {
+              this.logger.error('📍 Error al configurar la petición');
+            }
+            this.logger.error('❌❌❌ FIN DEL ERROR ❌❌❌');
+            this.logger.error('');
+            
+            throw error;
+          })
+        )
       );
 
-      const recommendations = mlResponse.data.recommendations || [];
+      const elapsed = Date.now() - startTime;
+      
+      // 🔍 DEBUG: Respuesta exitosa
+      this.logger.log('');
+      this.logger.log('✅✅✅ RESPUESTA EXITOSA DEL ML SERVICE ✅✅✅');
+      this.logger.log(`⏱️ Tiempo: ${elapsed}ms`);
+      this.logger.log(`📍 HTTP Status: ${mlResponse.status}`);
+      this.logger.log(`📊 Datos: ${JSON.stringify(mlResponse.data).substring(0, 300)}...`);
+      this.logger.log('✅✅✅ FIN DE RESPUESTA EXITOSA ✅✅✅');
+      this.logger.log('');
 
+      const recommendations = mlResponse.data.recommendations || [];
+      this.logger.log(`📊 Recomendaciones recibidas: ${recommendations.length}`);
 
       if (recommendations.length === 0) {
-        this.logger.warn(`No ML recommendations for user ${userId}, using fallback`);
+        this.logger.warn(`⚠️ No ML recommendations for user ${userId}, using fallback`);
         return this.getFallbackRecommendations(userId, excludeUsers, limit);
       }
 
-
+      this.logger.log(`🔄 Enriqueciendo ${recommendations.length} recomendaciones...`);
       const enrichedUsers = await this.enrichRecommendations(recommendations);
+      
+      this.logger.log(`✅ ${enrichedUsers.length} usuarios enriquecidos`);
+      this.logger.log('====================================');
 
       return {
         success: true,
@@ -71,9 +145,26 @@ export class SwipeService {
       };
 
     } catch (error) {
-      this.logger.error(`Error getting recommendations: ${error.message}`);
+      // 🔍 DEBUG: Error general
+      this.logger.error('');
+      this.logger.error('💥💥💥 ERROR GENERAL 💥💥💥');
+      this.logger.error(`📍 Error: ${error.message}`);
+      
+      if (error.code === 'ECONNREFUSED') {
+        this.logger.error('🚫 ECONNREFUSED: Servicio ML no disponible');
+      } else if (error.code === 'ETIMEDOUT') {
+        this.logger.error('⏱️ ETIMEDOUT: Timeout de conexión');
+      } else if (error.name === 'TimeoutError') {
+        this.logger.error('⏱️ TimeoutError: Petición tardó >55s');
+      } else if (error.response?.status === 404) {
+        this.logger.error('🔍 404: Endpoint no encontrado');
+        this.logger.error(`   URL: ${this.ML_SERVICE_URL}/recommendations`);
+      }
+      this.logger.error('💥💥💥 FIN DEL ERROR 💥💥💥');
+      this.logger.error('');
 
       // Si falla el ML, usar fallback
+      this.logger.log('🔄 Usando fallback...');
       const excludeUsers = await this.getExcludedUsers(userId);
       return this.getFallbackRecommendations(userId, excludeUsers, limit);
     }
@@ -244,7 +335,7 @@ export class SwipeService {
     excludeUsers: string[],
     limit: number
   ): Promise<GetRecommendationsResponseDTO> {
-    this.logger.warn('Using fallback recommendations');
+    this.logger.warn('🔄 Using fallback recommendations');
 
     const users = await this.userModel
       .find({
@@ -255,6 +346,8 @@ export class SwipeService {
       .select('email profile skills objectives activity privacy')
       .limit(limit)
       .lean();
+
+    this.logger.log(`📊 Fallback encontró ${users.length} usuarios`);
 
     const recommendations: RecommendedUserDTO[] = users.map(user => ({
       userId: user._id.toString(),
