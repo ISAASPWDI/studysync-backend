@@ -60,9 +60,9 @@ export class AuthController {
     }
 
     // Para web, por ahora no hace nada
-    @Get('google')
-    @UseGuards(AuthGuard("google"))
-    async googleAuth() { }
+    // @Get('google')
+    // @UseGuards(AuthGuard("google"))
+    // async googleAuth() { }
 
     // Para web, por ahora no hace nada
     @Get('google/callback')

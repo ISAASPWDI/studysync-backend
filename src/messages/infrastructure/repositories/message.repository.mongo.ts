@@ -29,7 +29,7 @@ export class MessageRepositoryMongo implements MessageRepository {
     const messageDoc = new this.messageModel({
       chatId: new Types.ObjectId(message.chatId),
       senderId: new Types.ObjectId(message.senderId),
-      content: message.content, // Aquí podrías encriptar
+      content: message.content, // se podria encriptar mediante un servicio
       type: message.type,
       status: message.status,
       replyTo: message.replyTo ? new Types.ObjectId(message.replyTo) : undefined,
@@ -47,8 +47,7 @@ export class MessageRepositoryMongo implements MessageRepository {
           lastMessageAt: saved.createdAt,
         },
         $inc: {
-          // Incrementar contador de no leídos para el receptor
-          // (esto se manejará mejor en el servicio)
+
         },
       },
     );

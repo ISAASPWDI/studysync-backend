@@ -23,7 +23,6 @@ import { GetUser } from 'src/users/infrastructure/decorators/get-user.decorator'
 export class MessagesController {
   constructor(private readonly messagesService: MessagesService) {}
 
-  // Obtener o crear chat basado en matchId
   @Post('chats/:matchId')
   async getOrCreateChat(
     @GetUser('id') userId: string,
@@ -36,7 +35,6 @@ export class MessagesController {
     };
   }
 
-  // Obtener mensajes de un chat (REST endpoint para cargar historial)
   @Get('chats/:chatId')
   async getMessages(
     @GetUser('id') userId: string,
@@ -47,7 +45,6 @@ export class MessagesController {
     return this.messagesService.getMessages(chatId, userId, page, limit);
   }
 
-  // Marcar mensajes como leídos (también manejado por WebSocket)
   @Post('chats/:chatId/read')
   async markAsRead(
     @GetUser('id') userId: string,
@@ -63,7 +60,6 @@ export class MessagesController {
     };
   }
 
-  // Eliminar mensaje
   @Delete(':messageId')
   async deleteMessage(
     @GetUser('id') userId: string,
@@ -77,7 +73,6 @@ export class MessagesController {
     };
   }
 
-  // Obtener contador de mensajes no leídos por chat
   @Get('chats/:chatId/unread-count')
   async getUnreadCount(
     @GetUser('id') userId: string,

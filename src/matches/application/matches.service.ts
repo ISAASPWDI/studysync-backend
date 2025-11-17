@@ -91,12 +91,6 @@ export class MatchesService {
 
     const updatedMatch = await this.matchRepository.acceptMatch(matchId);
 
-    // TODO: Crear chat para estos usuarios
-    // const chat = await this.chatService.createChat(match.user1, match.user2, match.id);
-
-    // TODO: Enviar notificación
-    // await this.notificationService.sendMatchAccepted(match.user1);
-
     return {
       success: true,
       message: 'Match aceptado exitosamente',
@@ -164,7 +158,7 @@ export class MatchesService {
     const totalPages = Math.ceil(filteredMatches.length / limit);
 
     return {
-      data: filteredMatches, // ✅ Ahora TypeScript sabe que no hay nulls
+      data: filteredMatches, 
       pagination: {
         total: filteredMatches.length,
         page,

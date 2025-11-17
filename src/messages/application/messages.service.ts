@@ -26,14 +26,14 @@ export class MessagesService {
     replyTo?: string;
     metadata?: Record<string, any>;
   }): Promise<Message> {
-    // Verificar que el usuario es participante del chat
+
     const isParticipant = await this.isUserInChat(data.senderId, data.chatId);
     if (!isParticipant) {
       throw new ForbiddenException('No tienes acceso a este chat');
     }
 
     const message = new Message(
-      '', // Se generará en BD
+      '', 
       data.chatId,
       data.senderId,
       data.content,
@@ -71,9 +71,7 @@ export class MessagesService {
   }
 
   async markMessagesAsRead(messageIds: string[], userId: string): Promise<void> {
-    // Verificar que los mensajes pertenecen a chats del usuario
-    // Por simplicidad, asumimos que el gateway ya validó esto
-    await this.messageRepository.markAsRead(messageIds);
+    await this.messageRepository.markAsRead(messageIds, userId);
   }
 
   async deleteMessage(messageId: string, userId: string): Promise<void> {
@@ -155,7 +153,7 @@ export class MessagesService {
       throw new ForbiddenException('El match debe estar confirmado');
     }
 
-    // Verificar que el usuario es parte del match
+
     if (match.user1 !== userId && match.user2 !== userId) {
       throw new ForbiddenException('No eres parte de este match');
     }
@@ -163,7 +161,6 @@ export class MessagesService {
     // Buscar chat existente
     let chat = await this.chatModel.findOne({ matchId: new Types.ObjectId(matchId) });
 
-    // Si no existe, crear uno nuevo
     if (!chat) {
       chat = new this.chatModel({
         matchId: new Types.ObjectId(matchId),

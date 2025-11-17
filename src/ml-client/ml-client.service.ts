@@ -58,12 +58,6 @@ export class MlClientService {
         this.logger.log(`✅ ML Client Service inicializado: ${this.ML_SERVICE_URL}`);
     }
 
-    /**
-     * Notifica al servicio ML que un usuario fue actualizado
-     * MODO SÍNCRONO: Espera a que el ML termine de re-entrenar (30 segundos timeout)
-     * 
-     * @param userId - ID del usuario actualizado
-     */
     async notifyUserUpdated(userId: string): Promise<void> {
         try {
             const headers: Record<string, string> = {
@@ -80,7 +74,7 @@ export class MlClientService {
             const response = await firstValueFrom(
                 this.httpService.post(
                     `${this.ML_SERVICE_URL}/webhook/user-updated`,
-                    {}, // Body vacío - el ML re-entrena toda la BD
+                    {},
                     {
                         headers,
                         timeout: this.RETRAIN_TIMEOUT,
@@ -102,16 +96,6 @@ export class MlClientService {
         }
     }
 
-    /**
-     * Solicita recomendaciones al servicio ML CON PAGINACIÓN
-     * BLOQUEA - Espera respuesta del ML
-     * 
-     * @param userId - ID del usuario
-     * @param excludeUsers - Usuarios a excluir (ya swipeados)
-     * @param limit - Resultados por página (default: 10)
-     * @param page - Número de página (default: 1)
-     * @param useCache - Usar cache de recomendaciones (default: true)
-     */
     async getRecommendations(
         userId: string,
         excludeUsers: string[],
@@ -152,12 +136,6 @@ export class MlClientService {
             throw error;
         }
     }
-
-    /**
-     * Limpia el cache de recomendaciones
-     * 
-     * @param userId - Usuario específico (opcional). Si no se envía, limpia todo el cache
-     */
     async clearRecommendationCache(userId?: string): Promise<boolean> {
         try {
             const headers: Record<string, string> = {
@@ -191,9 +169,6 @@ export class MlClientService {
         }
     }
 
-    /**
-     * Re-entrena el modelo ML manualmente
-     */
     async triggerManualRetrain(): Promise<boolean> {
         try {
             const headers: Record<string, string> = {
@@ -225,9 +200,6 @@ export class MlClientService {
         }
     }
 
-    /**
-     * Verifica el estado del servicio ML
-     */
     async checkHealth(): Promise<boolean> {
         try {
             const response = await firstValueFrom(
@@ -254,9 +226,6 @@ export class MlClientService {
         }
     }
 
-    /**
-     * Obtiene estadísticas del modelo ML
-     */
     async getModelStats(): Promise<any> {
         try {
             const response = await firstValueFrom(
@@ -273,9 +242,6 @@ export class MlClientService {
         }
     }
 
-    /**
-     * Manejo centralizado de errores del ML
-     */
     private handleMlError(error: any, operation: string): void {
         if (error.code === 'ECONNREFUSED') {
             this.logger.warn(`⚠️ [${operation}] ML service no está disponible (ECONNREFUSED)`);

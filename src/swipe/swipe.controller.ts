@@ -43,12 +43,6 @@ export class SwipeController {
     return this.swipeService.createSwipeAction(userId, dto);
   }
 
-  // 🔥 NUEVOS ENDPOINTS DE SINCRONIZACIÓN
-
-  /**
-   * Sincroniza el perfil del usuario actual con el ML Service
-   * Llamar después de completar/actualizar el perfil
-   */
   @Post('sync-profile')
   async syncCurrentUserProfile(@GetUser('id') userId: string) {
     try {
@@ -66,9 +60,6 @@ export class SwipeController {
     }
   }
 
-  /**
-   * Sincroniza un usuario específico (por admin o testing)
-   */
   @Post('sync-user/:userId')
   async syncSpecificUser(@Param('userId') userId: string) {
     try {
@@ -86,10 +77,7 @@ export class SwipeController {
     }
   }
 
-  /**
-   * Sincroniza TODOS los usuarios con el ML Service
-   * ⚠️ IMPORTANTE: En producción, protege este endpoint con rol de admin
-   */
+
   @Post('sync-all-users')
   async syncAllUsers() {
     try {
@@ -107,9 +95,6 @@ export class SwipeController {
     }
   }
 
-  /**
-   * Verifica si un usuario existe en el ML Service
-   */
   @Get('check-ml-sync/:userId')
   async checkMLSync(@Param('userId') userId: string) {
     try {
@@ -132,9 +117,6 @@ export class SwipeController {
     }
   }
 
-  /**
-   * Obtiene estadísticas del ML Service
-   */
   @Get('ml-stats')
   async getMLStats() {
     try {

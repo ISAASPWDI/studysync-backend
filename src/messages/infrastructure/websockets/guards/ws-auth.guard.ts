@@ -16,7 +16,6 @@ export class WsAuthGuard implements CanActivate {
     try {
       const client: AuthenticatedSocket = context.switchToWs().getClient();
       
-      // Si ya tiene userId, está autenticado
       if (client.userId) {
         return true;
       }
@@ -53,7 +52,6 @@ export class WsAuthGuard implements CanActivate {
       return authHeader.substring(7);
     }
 
-    // Intentar desde auth (algunas versiones de socket.io)
     const auth = client.handshake.auth?.token;
     if (auth) return auth;
 

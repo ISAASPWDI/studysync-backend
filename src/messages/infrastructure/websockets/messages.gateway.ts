@@ -59,7 +59,6 @@ export class MessagesGateway implements OnGatewayConnection, OnGatewayDisconnect
         return;
       }
 
-      // Validar token con JwtService
       const payload = await this.jwtService.verifyAsync(token);
       client.userId = payload.sub;
 
@@ -71,7 +70,6 @@ export class MessagesGateway implements OnGatewayConnection, OnGatewayDisconnect
       }
       this.userSockets.get(client.userId)!.add(client.id);
 
-      // Notificar a los contactos que el usuario está online
       await this.messagesService.updateUserOnlineStatus(client.userId, true);
       this.emitUserStatusToContacts(client.userId, 'online');
 

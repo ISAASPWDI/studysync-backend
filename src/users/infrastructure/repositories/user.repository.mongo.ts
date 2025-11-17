@@ -70,7 +70,6 @@ export class UserRepositoryMongo implements UserRepository {
 
     const userFinded = await this.findByIdOrThrow(userId);
 
-    // ⭐ Merge: mantener datos existentes si no vienen nuevos
     const formattedUser = UserHelpers.buildUpdateUser(userFinded, newUserInfo);
 
     const toUpdate = UserMapper.toPersistence(formattedUser);
@@ -87,7 +86,6 @@ export class UserRepositoryMongo implements UserRepository {
 
     const existsUser = await this.findByEmail(email);
     if (existsUser && existsUser.id !== userFinded.id) throw new UnauthorizedException('Ya existe un usuario con este email');
-    // ⭐ Merge: mantener datos existentes si no vienen nuevos
     const formattedUser = UserHelpers.buildUpdateUser(userFinded, body);
     const toUpdate = UserMapper.toPersistence(formattedUser);
 

@@ -29,7 +29,7 @@ export abstract class MessageRepository {
     messageId: string,
     status: string,
   ): Promise<Message | null>;
-  abstract markAsRead(messageIds: string[]): Promise<void>;
+  abstract markAsRead(messageIds: string[], userId: string): Promise<void>;
   abstract deleteMessage(messageId: string, userId: string): Promise<void>;
   abstract getUnreadCount(chatId: string, userId: string): Promise<number>;
 }

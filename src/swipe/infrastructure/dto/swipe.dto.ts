@@ -40,6 +40,8 @@ export class RecommendedUserDTO {
   showAge: boolean;
   showLocation: boolean;
   showSemester: boolean;
+  timeAvailability: string; 
+    preferredGroupSize: string;
 }
 
 export class GetRecommendationsResponseDTO {
