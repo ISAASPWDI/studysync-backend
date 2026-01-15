@@ -1,98 +1,221 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# StudySync 🎓
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+Academic matchmaking application inspired by Tinder, designed to connect students based on their interests, skills, and academic goals. Built with modern technologies including Flutter, Nest.js, MongoDB, and Machine Learning.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+## 📋 Descripción del Proyecto
 
-## Description
+StudySync es una plataforma innovadora que facilita conexiones académicas significativas entre estudiantes. Utilizando un algoritmo de Machine Learning (KNN), la aplicación sugiere perfiles compatibles basándose en habilidades, intereses, ubicación y objetivos académicos.
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+### Flujo de la Aplicación
 
-## Project setup
+1. **Login**: Autenticación segura con Google, GitHub o JWT
+2. **Splash Screen**: Recopilación inicial de información del usuario
+   - Habilidades
+   - Edad
+   - Ubicación
+   - Objetivos (colaborar, aprender, investigación, etc.)
+3. **Swipe**: Sistema de descubrimiento de perfiles compatibles
+   - Algoritmo KNN para matching inteligente
+   - Actualización dinámica basada en preferencias
+4. **Matches Académicos**: Gestión de conexiones
+   - ✅ Confirmadas (con estados: en línea, sin leer)
+   - ⏳ Pendientes (aceptar/rechazar)
+   - 📤 Enviados (pendiente, rechazado, aceptado)
+5. **Conversaciones**: Chat en tiempo real con matches confirmados
+   - Búsqueda rápida de conversaciones
+6. **Perfil**: CRUD completo de información personal
+   - Edición de habilidades
+   - Actualización automática del modelo ML
 
-```bash
-$ npm install
+## 🛠️ Stack Tecnológico
+
+### Frontend
+- **Flutter** - Framework multiplataforma
+
+### Backend
+- **Nest.js** - Framework Node.js
+- **TypeScript** - Tipado estático
+
+### Base de Datos
+- **MongoDB** - Base de datos NoSQL
+
+### Machine Learning
+- **Python** - Lenguaje para ML
+- **FastAPI** - API para modelo ML
+- **KNN (K-Nearest Neighbors)** - Algoritmo de clustering supervisado
+
+### Infraestructura & Autenticación
+- **Docker** - Containerización
+- **JWT** - Tokens de autenticación
+- **Google OAuth** - Autenticación con Google
+- **GitHub OAuth** - Autenticación con GitHub
+
+## 📁 Estructura del Proyecto
+
+```
+studysync/
+├── src/
+│   ├── auth/              # Módulo de autenticación
+│   ├── users/             # Gestión de usuarios
+│   │   ├── application/   # Casos de uso
+│   │   ├── domain/        # Entidades y lógica de negocio
+│   │   └── infrastructure/# Repositorios y adaptadores
+│   ├── swipe/             # Sistema de matching
+│   ├── matches/           # Gestión de matches
+│   ├── messages/          # Sistema de mensajería
+│   ├── ml-client/         # Cliente para servicio ML
+│   └── shared/            # Recursos compartidos
+├── dist/                  # Build de producción
+├── test/                  # Tests
+├── .env.example           # Variables de entorno (ejemplo)
+└── package.json           # Dependencias
 ```
 
-## Compile and run the project
+## 🚀 Instalación y Configuración
 
+### Requisitos Previos
+- Node.js >= 18.x
+- MongoDB >= 6.x
+- Python >= 3.9 (para servicio ML)
+- Docker (opcional)
+
+### Pasos de Instalación
+
+1. **Clonar el repositorio**
 ```bash
-# development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
+git clone <repository-url>
+cd studysync
 ```
 
-## Run tests
-
+2. **Instalar dependencias**
 ```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
+npm install
 ```
 
-## Deployment
-
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
-
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
-
+3. **Configurar variables de entorno**
 ```bash
-$ npm install -g @nestjs/mau
-$ mau deploy
+cp .env.example .env
+# Editar .env con tus credenciales
 ```
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+4. **Configurar variables necesarias en `.env`**
+```env
+# Base de datos
+MONGODB_URI=mongodb://localhost:27017/studysync
 
-## Resources
+# JWT
+JWT_SECRET=your-secret-key
 
-Check out a few resources that may come in handy when working with NestJS:
+# OAuth
+GOOGLE_CLIENT_ID=your-google-client-id
+GOOGLE_CLIENT_SECRET=your-google-client-secret
+GITHUB_CLIENT_ID=your-github-client-id
+GITHUB_CLIENT_SECRET=your-github-client-secret
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+# ML Service
+ML_SERVICE_URL=http://localhost:8000
+```
 
-## Support
+5. **Iniciar el servidor de desarrollo**
+```bash
+npm run start:dev
+```
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+## 🤖 Servicio de Machine Learning
 
-## Stay in touch
+El modelo KNN se ejecuta como un servicio independiente en FastAPI:
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+```bash
+cd ml-service
+pip install -r requirements.txt
+python main.py
+```
 
-## License
+El modelo se entrena y actualiza automáticamente con:
+- Preferencias del usuario
+- Historial de matches
+- Interacciones en la plataforma
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+## 📊 Características Principales
+
+### Sistema de Matching Inteligente
+- ✨ Algoritmo KNN para sugerencias personalizadas
+- 🔄 Actualización en tiempo real del perfil
+- 🎯 Filtrado por múltiples criterios
+
+### Gestión de Matches
+- 📊 Dashboard con estados de matches
+- 🔔 Notificaciones en tiempo real
+- ✅ Sistema de aceptación/rechazo
+
+### Mensajería
+- 💬 Chat en tiempo real
+- 🔍 Búsqueda rápida de conversaciones
+- 📱 Notificaciones push
+
+### Perfil de Usuario
+- ✏️ CRUD completo
+- 🏷️ Gestión de habilidades
+- 📸 Avatar personalizable
+
+## 🧪 Testing
+
+```bash
+# Unit tests
+npm run test
+
+# E2E tests
+npm run test:e2e
+
+# Test coverage
+npm run test:cov
+```
+
+## 🐳 Docker
+
+```bash
+# Construir imagen
+docker build -t studysync .
+
+# Ejecutar contenedor
+docker run -p 3000:3000 studysync
+```
+
+## 📝 Scripts Disponibles
+
+```bash
+npm run start          # Iniciar en producción
+npm run start:dev      # Iniciar en desarrollo
+npm run start:debug    # Iniciar con debugger
+npm run build          # Compilar proyecto
+npm run lint           # Ejecutar linter
+npm run format         # Formatear código
+```
+
+## 🤝 Contribución
+
+Las contribuciones son bienvenidas. Por favor:
+
+1. Fork el proyecto
+2. Crea una rama para tu feature (`git checkout -b feature/AmazingFeature`)
+3. Commit tus cambios (`git commit -m 'Add some AmazingFeature'`)
+4. Push a la rama (`git push origin feature/AmazingFeature`)
+5. Abre un Pull Request
+
+## 📄 Licencia
+
+Este proyecto está bajo la Licencia MIT.
+
+## 👥 Autores
+
+- Stevens Aliaga Arauco - [GitHub](https://github.com/ISAASPWDI)
+
+## 🙏 Agradecimientos
+
+- Inspirado en el modelo de Tinder
+- Comunidad de Flutter y Nest.js
+- Bibliotecas de Machine Learning de Python
+
+---
+
+**¿Tienes preguntas?** Abre un issue en el repositorio.
