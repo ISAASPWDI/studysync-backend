@@ -99,6 +99,7 @@ export class UserMapper {
             this.mapActivity(userDoc.activity),
             this.mapPrivacy(userDoc.privacy),
             userDoc.password,
+            userDoc.onboardingCompleted ?? false,
         );
     }
 
@@ -108,6 +109,7 @@ export class UserMapper {
             email: user.email,
             picture: user.picture,
             password: user.password,
+            onboardingCompleted: user.onboardingCompleted,
             profile: this.mapProfileToPersistence(user.profile),
             skills: this.mapSkillsToPersistence(user.skills),
             objectives: this.mapObjectivesToPersistence(user.objectives),

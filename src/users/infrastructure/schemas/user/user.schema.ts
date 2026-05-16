@@ -33,6 +33,9 @@ export class User {
 
     @Prop({ type: Privacy })
     privacy?: Privacy;
+
+    @Prop({ default: false })
+    onboardingCompleted: boolean;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);

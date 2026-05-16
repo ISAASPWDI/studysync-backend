@@ -260,18 +260,35 @@ export class MatchesService {
     return match.user1 === userId ? match.user2 : match.user1;
   }
 
-  private mapToOtherUserDTO(user: User, isOnline: boolean): OtherUserDTO {
-    const fullName = `${user.profile?.firstName || ''} ${user.profile?.lastName || ''}`.trim();
+private mapToOtherUserDTO(user: User, isOnline: boolean): OtherUserDTO {
+    console.log('USER RAW:', JSON.stringify({
+    id:       user.id,
+    email:    user.email,
+    profile:  user.profile,
+    name:     (user as any).name,
+    username: (user as any).username,
+  }));
+  // Intenta construir nombre desde múltiples fuentes
+  const firstName = user.profile?.firstName || '';
+  const lastName  = user.profile?.lastName  || '';
+  const fullName  = `${firstName} ${lastName}`.trim();
 
-    return {
-      id: user.id,
-      name: fullName,
-      picture: user.picture,
-      subject: user.skills?.technical?.[0],
-      university: user.profile?.university,
-      isOnline,
-      lastSeenAt: user.activity?.lastSeenAt,
-      bio: user.profile?.bio,
-    };
-  }
+  // Fallback: usa email, username, o "Usuario"
+  const name = fullName ||
+               (user as any).username     ||
+               (user as any).name         ||
+               user.email?.split('@')[0]  ||
+               'Usuario';
+
+  return {
+    id:          user.id,
+    name,                           // ← ahora siempre tiene valor
+    picture:     user.picture,
+    subject:     user.skills?.technical?.[0],
+    university:  user.profile?.university,
+    isOnline,
+    lastSeenAt:  user.activity?.lastSeenAt,
+    bio:         user.profile?.bio,
+  };
+}
 }

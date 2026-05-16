@@ -1,4 +1,4 @@
-import { IsOptional, ValidateNested } from 'class-validator';
+import { IsBoolean, IsOptional, ValidateNested } from 'class-validator';
 import { Type } from 'class-transformer';
 import { ProfileDTO } from '../entities/profile.dto';
 import { SkillsDTO } from '../entities/skills.dto';
@@ -34,4 +34,8 @@ export class UpsertUserDTO {
   @ValidateNested()
   @Type(() => PrivacyDTO)
   privacy?: PrivacyDTO;
+
+  @IsOptional()
+@IsBoolean()
+onboardingCompleted?: boolean;
 }

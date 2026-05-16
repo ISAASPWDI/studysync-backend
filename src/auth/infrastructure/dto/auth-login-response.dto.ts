@@ -8,4 +8,5 @@ export class AuthLoginResponseDTO {
     token: String;
     picture?: String;
     isNewUser?: boolean;
+    onboardingCompleted: boolean;
 }

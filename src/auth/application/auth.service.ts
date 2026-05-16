@@ -47,7 +47,7 @@ export class AuthService {
             user.privacy
         );
 
-        return { user: userResponse, token, sessionMethod };
+        return { user: userResponse, token, sessionMethod, onboardingCompleted: userResponse.onboardingCompleted };
     }
 
     async register(registerDTO: RegisterUserDTO): Promise<AuthLoginResponseDTO> {
@@ -98,7 +98,8 @@ export class AuthService {
             user: userResponse,
             token,
             sessionMethod: 'Manual',
-            picture: defaultPicture
+            picture: defaultPicture,
+            onboardingCompleted: false
         };
     }
 
@@ -195,7 +196,7 @@ export class AuthService {
             user.privacy
         );
 
-        return { user: userResponse, token, sessionMethod: provider, isNewUser, picture };
+        return { user: userResponse, token, sessionMethod: provider, isNewUser, picture,  onboardingCompleted: userResponse.onboardingCompleted  };
     }
     async isBlackListed(token: string): Promise<boolean>{
         return await this.authRepository.isBlacklisted(token);

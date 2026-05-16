@@ -16,5 +16,6 @@ export class User {
     public activity?: Activity,
     public privacy?: Privacy,
     public password?: string,
+    public onboardingCompleted: boolean = false,
   ) { }
 }

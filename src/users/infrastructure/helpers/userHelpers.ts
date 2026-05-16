@@ -26,6 +26,7 @@ export class UserHelpers {
                 ? UserMapper.privacyToEntity(updateData.privacy)
                 : existingUser.privacy,
             existingUser.password,
+            updateData.onboardingCompleted ?? existingUser.onboardingCompleted,
         );
     }
 }
