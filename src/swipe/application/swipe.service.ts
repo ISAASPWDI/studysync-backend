@@ -11,7 +11,7 @@ import { Model } from 'mongoose';
 import { firstValueFrom, timeout, catchError } from 'rxjs';
 import { AxiosError } from 'axios';
 import { Match, MatchDocument } from '../../matches/infrastructure/schemas/match.schema';
-
+import { Cron, CronExpression } from '@nestjs/schedule';
 import {
   GetRecommendationsResponseDTO,
   CreateSwipeActionDTO,
@@ -44,7 +44,17 @@ export class SwipeService {
 
     this.ML_SERVICE_URL = mlUrl.endsWith('/') ? mlUrl.slice(0, -1) : mlUrl;
   }
-
+@Cron('0 */7 * * * *')  // cada 7 minutos
+async keepMLAlive() {
+  try {
+    await firstValueFrom(
+      this.httpService.get(`${this.ML_SERVICE_URL}/`).pipe(timeout(5000))
+    );
+    this.logger.log('💓 ML Service keep-alive OK');
+  } catch (_) {
+    // silencioso, no importa si falla
+  }
+}
   // ─── Helper: determina si un usuario está online ──────────────────────────
   private isUserOnlineNow(lastSeenAt: Date | null | undefined): boolean {
     if (!lastSeenAt) return false;
@@ -76,7 +86,7 @@ export class SwipeService {
 
       const mlResponse = await firstValueFrom(
         this.httpService.post(fullUrl, requestPayload).pipe(
-          timeout(55000),
+          timeout(60000),
           catchError(async (error: AxiosError) => {
             if (error.response) {
               if (error.response.status === 404) {

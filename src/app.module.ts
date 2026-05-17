@@ -9,10 +9,11 @@ import { MatchesModule } from './matches/matches.module';
 import { SwipeModule } from './swipe/swipe.module';
 import { MessagesModule } from './messages/messages.module';
 import { JwtConfigModule } from './shared/jwt/jwt.module';
-
+import { ScheduleModule } from '@nestjs/schedule';
 
 @Module({
   imports: [
+    ScheduleModule.forRoot(),
     ConfigModule.forRoot({
       isGlobal: true, 
     }),
