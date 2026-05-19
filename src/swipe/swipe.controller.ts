@@ -30,7 +30,7 @@ export class SwipeController {
   @Get('recommendations')
   async getRecommendations(
     @GetUser('id') userId: string,
-    @Query('limit', new DefaultValuePipe(10), ParseIntPipe) limit: number,
+    @Query('limit', new DefaultValuePipe(50), ParseIntPipe) limit: number,
     @Query('offset') offset = 0,
   ): Promise<GetRecommendationsResponseDTO> {
     return this.swipeService.getRecommendations(userId, limit, offset);
