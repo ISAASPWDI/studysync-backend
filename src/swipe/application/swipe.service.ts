@@ -86,7 +86,7 @@ async keepMLAlive() {
 
       const mlResponse = await firstValueFrom(
         this.httpService.post(fullUrl, requestPayload).pipe(
-          timeout(25000),
+          timeout(55000),
           catchError(async (error: AxiosError) => {
             if (error.response) {
               if (error.response.status === 404) {
